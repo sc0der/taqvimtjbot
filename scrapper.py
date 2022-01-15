@@ -1,18 +1,43 @@
 import requests
 from bs4 import BeautifulSoup
+import re
+import json
 
 class ScraperModule:
     def __init__(self, url):
         self.url = url
 
-    def test(self):
-        print(self.url)
-
     def scrap_page(self):
+        data = []
         page = requests.get(self.url)
         soup = BeautifulSoup(page.content, 'html.parser')
-        main_content = soup.find(id="wb_element_instance40")
-        forecast_items = main_content.find('div')
-        elemenst = forecast_items.findAll('span')
-        # print(elemenst)
+        main_content = soup.find(class_="today")
+        today = {
+            "bomdod":"",
+            "peshin":"",
+            "asr":"",
+            "shom":"",
+            "khuftan":"",
+            "no_namaz":""
+        }
+        fff = list(main_content)[2:]
+        ddd = [self.replacer("".join(str(item).split())) for item in fff]
         
+        for sline in ddd:
+            if sline != "":
+                data.append(sline)
+
+        today["bomdod"] = data[2]
+        today["peshin"] = data[3]
+        today["asr"] = data[4]
+        today["shom"] = data[6]
+        today["khuftan"] = data[7]
+        today["no_namaz"] = data[5]
+        with open("today.json", "w") as file:
+            json.dump(today, file)
+
+    def replacer(self, value):
+        row1 = str(value)
+        row2 = re.sub("<td>", '', row1)
+        row3 = re.sub("</td>", '', row2)
+        return row3
