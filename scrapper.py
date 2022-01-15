@@ -20,10 +20,10 @@ class ScraperModule:
             "khuftan":"",
             "no_namaz":""
         }
-        fff = list(main_content)[2:]
-        ddd = [self.replacer("".join(str(item).split())) for item in fff]
+        converted_list = list(main_content)[2:]
+        converted_list = [self.replacer("".join(str(item).split())) for item in converted_list]
         
-        for sline in ddd:
+        for sline in converted_list:
             if sline != "":
                 data.append(sline)
 
@@ -35,9 +35,21 @@ class ScraperModule:
         today["no_namaz"] = data[5]
         with open("today.json", "w") as file:
             json.dump(today, file)
+            file.close()
 
     def replacer(self, value):
-        row1 = str(value)
-        row2 = re.sub("<td>", '', row1)
+        row2 = re.sub("<td>", '', str(value))
         row3 = re.sub("</td>", '', row2)
         return row3
+
+
+class TgGroupsModule:
+
+    def new_group(self, group_id):
+        with open("groups.csv", "w") as file:
+            file.write(group_id)
+            file.close()
+
+    def check_Group_id(self, group_id):
+        
+        pass
