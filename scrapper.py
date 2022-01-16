@@ -2,6 +2,19 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import json
+import os
+
+
+class GlobalMessage:
+
+    def init_file(self):
+        f = open("/home/sirius/Documents/namoz_bot/today.json","r", encoding='utf-8')
+        data = json.load(f)
+        return data
+
+    def get_message(self, key_value):
+        data = self.init_file()[key_value]
+        return data
 
 class ScraperModule:
     def __init__(self, url):
@@ -36,6 +49,7 @@ class ScraperModule:
         with open("today.json", "w") as file:
             json.dump(today, file)
             file.close()
+    
 
     def replacer(self, value):
         row2 = re.sub("<td>", '', str(value))
@@ -52,5 +66,3 @@ class TgGroupsModule:
 
     def check_Group_id(self, group_id):
         pass
-
-    
