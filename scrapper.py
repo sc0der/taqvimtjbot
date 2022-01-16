@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import json
+import datetime
 import csv
 import os
 import requests
@@ -54,6 +55,14 @@ class GlobalMessage:
         text = value.split("-")
         msg = f"""Az: {text[0]} \nTo: {text[1]}"""
         return msg
+
+    def message(self, key_value):
+        msg = self.get_message(key_value)
+        date = self.get_namoz("date") 
+        dayName = self.get_namoz("day") 
+        namosMsg = self.converter(self.get_namoz(key_value))
+        MSG = f"""Имруз {date}, ({dayName}) \n\n *{msg}\n\n{namosMsg}*"""
+        return MSG
 class ScraperModule:
     def __init__(self, url):
         self.url = url
@@ -107,3 +116,18 @@ class TgGroupsModule:
         with open("groups.csv", "w") as file:
             file.write(group_id)
             file.close()
+
+    def intTime(self, time):
+        value = time.split(":")
+        return int(value[0]), int(value[1])
+
+    def is_Time(self, namaz_name):
+        globalMessage = GlobalMessage()
+        namaz = globalMessage.get_namoz(namaz_name)
+        now = datetime.datetime.now().strftime('%H:%M')
+        current_namaz = namaz.split("-")
+        if self.intTime(now)[0] >= self.intTime(current_namaz[0])[0] and self.intTime(now)[1] >= self.intTime(current_namaz[0])[1] and self.intTime(now)[0] < self.intTime(current_namaz[1])[0] :
+            return True
+        else:
+            return False
+        
