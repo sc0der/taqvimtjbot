@@ -52,7 +52,7 @@ class GlobalMessage:
 
     def converter(self, value):
         text = value.split("-")
-        msg = f"""Az:\n{text[0]} \nTo: \n{text[1]}"""
+        msg = f"""Az: {text[0]} \nTo: {text[1]}"""
         return msg
 class ScraperModule:
     def __init__(self, url):

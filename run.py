@@ -14,31 +14,47 @@ async def send_welcome(message: types.Message):
 @dp.message_handler(commands=['subh'])
 async def send_welcome(message: types.Message):
     msg = globalMessage.get_message("subh")
-    namoz = globalMessage.get_namoz("subh")
-    namosMsg = globalMessage.converter(namoz)
-    MSG = f"""*{msg} \n{namosMsg}*"""
-    
+    date = globalMessage.get_namoz("date") 
+    dayName = globalMessage.get_namoz("day") 
+    namosMsg = globalMessage.converter(globalMessage.get_namoz("subh"))
+    MSG = f"""Имруз {date}, ({dayName}) \n\n *{msg}\n\n{namosMsg}*"""
     await message.answer(MSG, parse_mode='Markdown')
 
 @dp.message_handler(commands=['zukhr'])
 async def send_welcome(message: types.Message):
     msg = globalMessage.get_message("zukhr")
-    await message.answer(msg)
+    date = globalMessage.get_namoz("date") 
+    dayName = globalMessage.get_namoz("day") 
+    namosMsg = globalMessage.converter(globalMessage.get_namoz("zukhr"))
+    MSG = f"""Имруз {date}, ({dayName}) \n\n *{msg}\n\n{namosMsg}*"""
+    await message.answer(MSG, parse_mode='Markdown')
 
 @dp.message_handler(commands=['asr'])
 async def send_welcome(message: types.Message):
     msg = globalMessage.get_message("asr")
-    await message.answer(msg)
+    date = globalMessage.get_namoz("date") 
+    dayName = globalMessage.get_namoz("day") 
+    namosMsg = globalMessage.converter(globalMessage.get_namoz("asr"))
+    MSG = f"""Имруз {date}, ({dayName}) \n\n *{msg}\n\n{namosMsg}*"""
+    await message.answer(MSG, parse_mode='Markdown')
 
 @dp.message_handler(commands=['maghrib'])
 async def send_welcome(message: types.Message):
     msg = globalMessage.get_message("maghrib")
-    await message.answer(msg)
+    date = globalMessage.get_namoz("date") 
+    dayName = globalMessage.get_namoz("day") 
+    namosMsg = globalMessage.converter(globalMessage.get_namoz("maghrib"))
+    MSG = f"""Имруз {date}, ({dayName}) \n\n *{msg}\n\n{namosMsg}*"""
+    await message.answer(MSG, parse_mode='Markdown')
 
 @dp.message_handler(commands=['isha'])
 async def send_welcome(message: types.Message):
     msg = globalMessage.get_message("isha")
-    await message.answer(msg)
+    date = globalMessage.get_namoz("date") 
+    dayName = globalMessage.get_namoz("day") 
+    namosMsg = globalMessage.converter(globalMessage.get_namoz("isha"))
+    MSG = f"""Имруз {date}, ({dayName}) \n\n *{msg}\n\n{namosMsg}*"""
+    await message.answer(MSG, parse_mode='Markdown')
 
 if __name__ == "__main__":
     # m = globalMessage.get_message("bomdod")
