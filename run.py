@@ -8,9 +8,8 @@ globalMessage = GlobalMessage()
 
 @dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
-    # msg = globalMessage.get_message("welcome")
-    await message.answer("salom")
-
+    globalMessage.send_text("salom", TOKEN)
+    await message.answer(message.chat.id)
 
 @dp.message_handler(commands=['subh'])
 async def send_welcome(message: types.Message):
@@ -26,7 +25,6 @@ async def send_welcome(message: types.Message):
 async def send_welcome(message: types.Message):
     msg = globalMessage.get_message("asr")
     await message.answer(msg)
-
 
 @dp.message_handler(commands=['maghrib'])
 async def send_welcome(message: types.Message):

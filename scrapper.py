@@ -2,8 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import json
+import csv
 import os
-
+import requests
 
 class GlobalMessage:
 
@@ -11,6 +12,30 @@ class GlobalMessage:
         f = open("/home/sirius/Documents/namoz_bot/messages.json","r", encoding='utf-8')
         data = json.load(f)
         return data
+
+    def init_chats_file(self):
+        data = []
+        csv_file = open("/home/sirius/Documents/namoz_bot/chats.csv")
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            data = row
+        return set(data)
+
+    def add_new_chat(self, chat_id):
+        csv_file = open("/home/sirius/Documents/namoz_bot/chats.csv", "a")
+        csv_file.write(str(chat_id)+",")
+        csv_file.close()
+
+    def sendNotification(self, notification,bot_token, bot_chatID):
+        send_text = 'https://api.telegram.org/bot' + bot_token + \
+            '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=HTML&text=' + notification
+        response = requests.get(send_text)
+        return response.json()
+
+    def send_text(self, notification,bot_token):
+        for item in self.init_chats_file():
+            print(item)
+            self.sendNotification(notification,bot_token, item)
 
     def init_namoz_file(self):
         f = open("/home/sirius/Documents/namoz_bot/today.json","r", encoding='utf-8')
@@ -20,7 +45,10 @@ class GlobalMessage:
     def get_message(self, key_value):
         data = self.init_message_file()[key_value]
         return data
-
+    
+    def get_namoz(self, key_value):
+        data = self.init_namoz_file()[key_value]
+        return data
 class ScraperModule:
     def __init__(self, url):
         self.url = url
@@ -71,3 +99,5 @@ class TgGroupsModule:
 
     def check_Group_id(self, group_id):
         pass
+
+
