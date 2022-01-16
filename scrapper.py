@@ -49,6 +49,11 @@ class GlobalMessage:
     def get_namoz(self, key_value):
         data = self.init_namoz_file()[key_value]
         return data
+
+    def converter(self, value):
+        text = value.split("-")
+        msg = f"""Az:\n{text[0]} \nTo: \n{text[1]}"""
+        return msg
 class ScraperModule:
     def __init__(self, url):
         self.url = url
@@ -59,28 +64,34 @@ class ScraperModule:
         soup = BeautifulSoup(page.content, 'html.parser')
         main_content = soup.find(class_="today")
         today = {
-            "bomdod":"",
-            "peshin":"",
+            "day":"",
+            "date":'',
+            "subh":"",
+            "zukhr":"",
             "asr":"",
-            "shom":"",
-            "khuftan":"",
+            "maghrib":"",
+            "isha":"",
             "no_namaz":""
         }
-        converted_list = list(main_content)[2:]
+        # print(list(main_content)[1:])
+        converted_list = list(main_content)
         converted_list = [self.replacer("".join(str(item).split())) for item in converted_list]
         
         for sline in converted_list:
             if sline != "":
+                print(sline)
                 data.append(sline)
 
-        today["bomdod"] = data[2]
-        today["peshin"] = data[3]
-        today["asr"] = data[4]
-        today["shom"] = data[6]
-        today["khuftan"] = data[7]
-        today["no_namaz"] = data[5]
-        with open("today.json", "w") as file:
-            json.dump(today, file)
+        today["day"] = data[0]
+        today["date"] = data[1]
+        today["subh"] = data[3]
+        today["zukhr"] = data[4]
+        today["asr"] = data[5]
+        today["maghrib"] = data[7]
+        today["isha"] = data[8]
+        today["no_namaz"] = data[6]
+        with open("today.json", "w", encoding='utf8') as file:
+            json.dump(today, file, ensure_ascii=False)
             file.close()
     
 
@@ -96,8 +107,3 @@ class TgGroupsModule:
         with open("groups.csv", "w") as file:
             file.write(group_id)
             file.close()
-
-    def check_Group_id(self, group_id):
-        pass
-
-

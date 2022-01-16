@@ -14,7 +14,11 @@ async def send_welcome(message: types.Message):
 @dp.message_handler(commands=['subh'])
 async def send_welcome(message: types.Message):
     msg = globalMessage.get_message("subh")
-    await message.answer(msg)
+    namoz = globalMessage.get_namoz("subh")
+    namosMsg = globalMessage.converter(namoz)
+    MSG = f"""*{msg} \n{namosMsg}*"""
+    
+    await message.answer(MSG, parse_mode='Markdown')
 
 @dp.message_handler(commands=['zukhr'])
 async def send_welcome(message: types.Message):
@@ -39,6 +43,6 @@ async def send_welcome(message: types.Message):
 if __name__ == "__main__":
     # m = globalMessage.get_message("bomdod")
     # print(m)
-    # newsc = ScraperModule("http://shuroiulamo.tj/tj/namaz")
-    # newsc.scrap_page()
+    newsc = ScraperModule("http://shuroiulamo.tj/tj/namaz")
+    newsc.scrap_page()
     executor.start_polling(dp, skip_updates=True)
