@@ -7,13 +7,18 @@ import os
 
 class GlobalMessage:
 
-    def init_file(self):
-        f = open("/home/sirius/Documents/namoz_bot/today.json","r", encoding='utf-8')
+    def init_message_file(self):
+        f = open("/home/sirius/Documents/namoz_bot/messages.json","r", encoding='utf-8')
         data = json.load(f)
         return data
 
+    def init_namoz_file(self):
+        f = open("/home/sirius/Documents/namoz_bot/today.json","r", encoding='utf-8')
+        data = json.load(f)
+        return data
+        
     def get_message(self, key_value):
-        data = self.init_file()[key_value]
+        data = self.init_message_file()[key_value]
         return data
 
 class ScraperModule:

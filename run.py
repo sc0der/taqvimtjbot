@@ -1,20 +1,46 @@
 from scrapper import ScraperModule, GlobalMessage
 from aiogram.types import Message
 from aiogram import Bot, executor, types, Dispatcher
-
-# bot = Bot(token="", validate_token=True, parse_mode="HTML")
-# dp = Dispatcher(bot, storage=storage)
+from config import *
+bot = Bot(token=TOKEN, validate_token=True, parse_mode="HTML")
+dp = Dispatcher(bot)
 globalMessage = GlobalMessage()
 
-# @dp.message_handler(commands=['start'])
-# async def send_welcome(message: types.Message):
-#     msg = globalMessage.get_message("welcome")
-#     converted_msg = replacer(msg, 'user_name', message['from']['username'] )
-#     await message.answer(converted_msg)
+@dp.message_handler(commands=['start'])
+async def send_welcome(message: types.Message):
+    # msg = globalMessage.get_message("welcome")
+    await message.answer("salom")
+
+
+@dp.message_handler(commands=['subh'])
+async def send_welcome(message: types.Message):
+    msg = globalMessage.get_message("subh")
+    await message.answer(msg)
+
+@dp.message_handler(commands=['zukhr'])
+async def send_welcome(message: types.Message):
+    msg = globalMessage.get_message("zukhr")
+    await message.answer(msg)
+
+@dp.message_handler(commands=['asr'])
+async def send_welcome(message: types.Message):
+    msg = globalMessage.get_message("asr")
+    await message.answer(msg)
+
+
+@dp.message_handler(commands=['maghrib'])
+async def send_welcome(message: types.Message):
+    msg = globalMessage.get_message("maghrib")
+    await message.answer(msg)
+
+@dp.message_handler(commands=['isha'])
+async def send_welcome(message: types.Message):
+    msg = globalMessage.get_message("isha")
+    await message.answer(msg)
 
 if __name__ == "__main__":
-    m = globalMessage.get_message("bomdod")
-    print(m)
+    # m = globalMessage.get_message("bomdod")
+    # print(m)
     # newsc = ScraperModule("http://shuroiulamo.tj/tj/namaz")
     # newsc.scrap_page()
-    # executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, skip_updates=True)
