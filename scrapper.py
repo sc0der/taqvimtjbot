@@ -7,23 +7,25 @@ import csv
 import os
 import requests
 
+path = os.getcwd()
+print("path: ", path)
 class GlobalMessage:
 
     def init_message_file(self):
-        f = open("/home/sirius/Documents/namoz_bot/messages.json","r", encoding='utf-8')
+        f = open(f"{path}/files/messages.json","r", encoding='utf-8')
         data = json.load(f)
         return data
 
     def init_chats_file(self):
         data = []
-        csv_file = open("/home/sirius/Documents/namoz_bot/chats.csv")
+        csv_file = open(f"{path}/files/chats.csv")
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             data = row
         return set(data)
 
     def add_new_chat(self, chat_id):
-        csv_file = open("/home/sirius/Documents/namoz_bot/chats.csv", "a")
+        csv_file = open(f"{path}/files/chats.csv", "a")
         csv_file.write(str(chat_id)+",")
         csv_file.close()
 
@@ -39,7 +41,7 @@ class GlobalMessage:
             self.sendNotification(notification,bot_token, item)
 
     def init_namoz_file(self):
-        f = open("/home/sirius/Documents/namoz_bot/today.json","r", encoding='utf-8')
+        f = open(f"{path}/files/today.json","r", encoding='utf-8')
         data = json.load(f)
         return data
         
